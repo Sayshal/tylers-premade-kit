@@ -1,12 +1,24 @@
 {
   "id": "tylers-premade-kit",
   "title": "Tyler's Premade Kit",
+  "description": "Premade D&D 5e items built with the Midiverse.",
   "version": "0.0.1",
   "compatibility": {
-    "minimum": "12",
-    "verified": "12",
-    "maximum": "12"
+    "verified": "14.361"
   },
+  "esmodules": [
+    "scripts/module.mjs"
+  ],
+  "styles": [
+    "styles/module.css"
+  ],
+  "languages": [
+    {
+      "lang": "en",
+      "name": "English",
+      "path": "languages/en.json"
+    }
+  ],
   "relationships": {
     "requires": [
       {
@@ -25,14 +37,27 @@
         "compatibility": {}
       }
     ],
+    "recommends": [
+      {
+        "id": "sequencer",
+        "type": "module",
+        "reason": "Required for visual effects on TPK items.",
+        "compatibility": {}
+      },
+      {
+        "id": "jb2a_patreon",
+        "type": "module",
+        "reason": "Asset library referenced by TPK animations (free JB2A also supported).",
+        "compatibility": {}
+      }
+    ],
     "systems": [
       {
         "id": "dnd5e",
         "type": "system",
         "compatibility": {
-          "minimum": "3.3.9",
-          "verified": "3.3.9",
-          "maximum": "3.3.9"
+          "minimum": "5.3.0",
+          "verified": "5.3.3"
         }
       }
     ]
@@ -96,7 +121,12 @@
       "name": "Tyler's Premade Kit",
       "sorting": "m",
       "color": "#ff144f",
-      "packs": ["tpk-actors", "tpk-items", "tpk-spells", "tpk-features"],
+      "packs": [
+        "tpk-actors",
+        "tpk-items",
+        "tpk-spells",
+        "tpk-features"
+      ],
       "folders": []
     }
   ]
