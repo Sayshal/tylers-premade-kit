@@ -4,7 +4,7 @@
   "description": "Premade D&D 5e items built with the Midiverse.",
   "version": "0.0.1",
   "compatibility": {
-    "verified": "14.361"
+    "verified": "14.363"
   },
   "esmodules": [
     "scripts/module.mjs"
