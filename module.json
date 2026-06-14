@@ -1,7 +1,7 @@
 {
   "id": "tylers-premade-kit",
   "title": "Tyler's Premade Kit",
-  "description": "Premade D&D 5e items built with the Midiverse.",
+  "description": "A growing compendium of D&D 5e spells, items, features, and statblocks built on midi-qol, DAE, and Sequencer, so each one handles its own rolls, conditions, and animations the moment you drop it on a sheet.",
   "version": "0.0.1",
   "compatibility": {
     "verified": "14.363"
