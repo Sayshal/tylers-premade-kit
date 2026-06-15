@@ -2,5 +2,6 @@ dnd5e
 foundry
 tylers-premade-kit.lock
 todo/
-/node_modules
-/packs
+node_modules/
+packs/*
+!packs/_source/

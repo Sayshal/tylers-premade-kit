@@ -1,0 +1,281 @@
+name: Numbing Touch
+type: spell
+img: icons/magic/death/hand-withered-gray.webp
+folder: null
+sort: 0
+system:
+  description:
+    value: >-
+      <p>Your hand crackles with frigid undeath. Make a melee spell attack — on
+      a hit, you may instead force the target to make a Wisdom saving throw. On
+      a failed save, the target takes 1d8 cold damage and has disadvantage on
+      the next saving throw it makes before the end of its next turn. On a
+      successful save, it takes half damage and no debuff.</p> <p><em>At higher
+      levels:</em> 2d8 at 5th, 3d8 at 11th, 4d8 at 17th.</p>
+    chat: ''
+  source:
+    book: TPK
+    page: ''
+    license: ''
+    rules: '2024'
+    revision: 1
+    custom: ''
+  identifier: numbing-touch
+  level: 0
+  school: nec
+  properties:
+    - somatic
+  materials:
+    value: ''
+    consumed: false
+    cost: 0
+    supply: 0
+  preparation:
+    mode: prepared
+    prepared: true
+  range:
+    value: ''
+    units: touch
+  target:
+    affects:
+      count: '1'
+      type: creature
+      choice: false
+      special: ''
+    template:
+      count: ''
+      contiguous: false
+      type: ''
+      size: ''
+      width: ''
+      height: ''
+      units: ''
+  sourceClass: ''
+  duration:
+    value: ''
+    units: inst
+  activation:
+    type: action
+    value: 1
+    condition: ''
+  activities:
+    saveNumbingTouch:
+      _id: saveNumbingTouch
+      type: save
+      sort: 0
+      name: ''
+      activation:
+        type: action
+        value: null
+        condition: ''
+        override: false
+      consumption:
+        spellSlot: true
+        targets: []
+        scaling:
+          allowed: false
+          max: ''
+      description:
+        chatFlavor: ''
+      duration:
+        units: inst
+        concentration: false
+        value: ''
+        special: ''
+        override: false
+      effects:
+        - _id: numbingTouchDebuffRider
+          riders:
+            effect:
+              - numbingTouchDebuff
+            item: []
+      range:
+        value: ''
+        units: touch
+        special: ''
+        override: false
+      target:
+        template:
+          count: ''
+          contiguous: false
+          type: ''
+          size: ''
+          width: ''
+          height: ''
+          units: ''
+        affects:
+          count: '1'
+          type: creature
+          choice: false
+          special: ''
+        override: false
+        prompt: false
+      uses:
+        spent: 0
+        max: ''
+        recovery: []
+      damage:
+        parts:
+          - number: 1
+            denomination: 8
+            bonus: ''
+            types:
+              - cold
+            custom:
+              enabled: false
+              formula: ''
+            scaling:
+              mode: whole
+              number: 1
+              formula: ''
+        onSave: half
+        critical:
+          allow: false
+      save:
+        ability:
+          - wis
+        dc:
+          formula: ''
+          calculation: spellcasting
+          value: null
+      midiProperties:
+        identifier: save-numbing-touch
+        ignoreTraits: []
+        triggeredActivityId: none
+        triggeredActivityConditionText: ''
+        triggeredActivityTargets: targets
+        triggeredActivityRollAs: self
+        forceDialog: false
+        confirmTargets: default
+        automationOnly: false
+        otherActivityCompatible: false
+        autoTargetType: any
+        autoTargetAction: default
+        magicEffect: true
+        magicDamage: true
+        forceConsumeDialog: default
+        forceRollDialog: default
+        forceDamageDialog: default
+        noConcentrationCheck: false
+        skipConcentrationCheck: false
+        removeChatButtons: default
+        rollMode: default
+        chooseEffects: false
+        toggleEffect: false
+        ignoreFullCover: false
+  uses:
+    spent: null
+    max: ''
+    recovery: []
+effects:
+  - _id: numbTouchDebuf00
+    name: Numbing Touch
+    img: icons/magic/death/hand-withered-gray.webp
+    type: base
+    description: >-
+      Disadvantage on the next saving throw made before the end of your next
+      turn.
+    statuses: []
+    origin: null
+    sort: 0
+    disabled: false
+    transfer: false
+    duration:
+      value: null
+      units: ''
+      expiry: targetEnd
+      expired: false
+    start:
+      time: 0
+      round: 0
+      turn: 0
+      combat: null
+      combatant: null
+      initiative: null
+    showIcon: 2
+    system:
+      changes:
+        - key: flags.midi-qol.optional.tpkNumbingTouch.label
+          value: Numbing Touch
+          type: custom
+          priority: 20
+        - key: flags.midi-qol.optional.tpkNumbingTouch.save.all
+          value: '-1d4'
+          type: custom
+          priority: 20
+        - key: flags.midi-qol.optional.tpkNumbingTouch.count
+          value: '1'
+          type: custom
+          priority: 20
+        - key: flags.midi-qol.optional.tpkNumbingTouch.force
+          value: '1'
+          type: custom
+          priority: 20
+    flags:
+      dae:
+        stackable: noneName
+      tyler-premade-kit:
+        info:
+          identifier: tpk-numbing-touch-debuff
+          source: tylers-premade-kit
+          version: 0.1.0
+          rules: modern
+    _key: '!items.effects!WAt1ih2cxGKalzlh.numbTouchDebuf00'
+flags:
+  midi-qol:
+    effectActivation: false
+    onUseMacroName: '[postActiveEffects]ItemMacro'
+    AoETargetType: any
+    AoETargetTypeIncludeSelf: false
+    autoTarget: default
+    rollAttackPerTarget: never
+    removeAttackDamageButtons: default
+    itemCondition: ''
+    reactionCondition: ''
+    otherCondition: ''
+    effectCondition: ''
+  midiProperties:
+    nodam: false
+    fulldam: false
+    halfdam: false
+    autoFailFriendly: false
+    autoSaveFriendly: false
+    rollOther: false
+    critOther: false
+    offHandWeapon: false
+    magicdam: true
+    magiceffect: true
+    concentration: false
+    noConcentrationCheck: false
+    toggleEffect: false
+    ignoreTotalCover: false
+    confirmTargets: default
+    idr: false
+    idi: false
+    idv: false
+    ida: false
+  dae:
+    macro:
+      name: Numbing Touch
+      img: icons/magic/death/hand-withered-gray.webp
+      type: script
+      scope: global
+      command: |
+        const params = {speaker, actor, token, character, item, args, scope};
+        if (typeof args[0] !== "string") {
+          params.workflow = workflow;
+          params.options = options;
+        }
+        return await TPK.macros.spells.numbingTouch(params);
+      author: null
+      ownership:
+        default: 3
+      flags: {}
+  tyler-premade-kit:
+    info:
+      identifier: tpk-numbing-touch
+      source: tylers-premade-kit
+      version: 0.1.0
+      rules: modern
+_id: WAt1ih2cxGKalzlh
+_key: '!items!WAt1ih2cxGKalzlh'

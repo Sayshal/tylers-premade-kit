@@ -1,0 +1,271 @@
+name: Bloodburn
+type: spell
+img: icons/magic/fire/explosion-fireball-medium-red-orange.webp
+folder: null
+sort: 0
+system:
+  description:
+    value: >-
+      <p>You inflict a burning pain upon yourself, causing another creature
+      that you can see within range to feel an even more excruciating pain as
+      their blood boils. As you cast the spell, you must spend a number of hit
+      points (minimum 1, maximum your current HP &minus; 1). The creature must
+      then make a Constitution saving throw. On a failed save, the creature
+      takes 2d6 + the number of hit points spent as fire damage, and
+      immediately falls prone as they become wracked with pain. On a
+      successful save, the target takes half as much damage and doesn&rsquo;t
+      fall prone.</p> <p><em>Constructs, elementals, and undead are immune to
+      this spell.</em></p> <p><strong>At Higher Levels.</strong> When you cast
+      this spell using a spell slot of 2nd level or higher, the damage
+      increases by 1d6 for each slot level above 1st.</p>
+    chat: ''
+  source:
+    book: TPK
+    page: ''
+    license: ''
+    rules: '2024'
+    revision: 1
+    custom: ''
+  identifier: bloodburn
+  level: 1
+  school: evo
+  properties:
+    - vocal
+    - somatic
+  materials:
+    value: ''
+    consumed: false
+    cost: 0
+    supply: 0
+  preparation:
+    mode: prepared
+    prepared: true
+  range:
+    value: 120
+    units: ft
+  target:
+    affects:
+      count: '1'
+      type: creature
+      choice: false
+      special: ''
+    template:
+      count: ''
+      contiguous: false
+      type: ''
+      size: ''
+      width: ''
+      height: ''
+      units: ''
+  sourceClass: ''
+  duration:
+    value: ''
+    units: inst
+  activation:
+    type: action
+    value: 1
+    condition: ''
+  activities:
+    castBloodburn001:
+      _id: castBloodburn001
+      type: save
+      sort: 0
+      name: ''
+      activation:
+        type: action
+        value: null
+        condition: ''
+        override: false
+      consumption:
+        spellSlot: true
+        targets: []
+        scaling:
+          allowed: true
+          max: '9'
+      description:
+        chatFlavor: ''
+      duration:
+        units: inst
+        concentration: false
+        value: ''
+        special: ''
+        override: false
+      effects:
+        - _id: bloodburnProneRider
+          riders:
+            effect:
+              - proneBloodburn00
+            item: []
+      range:
+        value: 120
+        units: ft
+        special: ''
+        override: false
+      target:
+        template:
+          count: ''
+          contiguous: false
+          type: ''
+          size: ''
+          width: ''
+          height: ''
+          units: ''
+        affects:
+          count: '1'
+          type: creature
+          choice: false
+          special: ''
+        override: false
+        prompt: true
+      uses:
+        spent: 0
+        max: ''
+        recovery: []
+      damage:
+        parts:
+          - number: 2
+            denomination: 6
+            bonus: ''
+            types:
+              - fire
+            custom:
+              enabled: false
+              formula: ''
+            scaling:
+              mode: whole
+              number: 1
+              formula: ''
+        onSave: half
+        critical:
+          allow: false
+      save:
+        ability:
+          - con
+        dc:
+          formula: ''
+          calculation: spellcasting
+          value: null
+      midiProperties:
+        identifier: save-bloodburn
+        ignoreTraits: []
+        triggeredActivityId: none
+        triggeredActivityConditionText: ''
+        triggeredActivityTargets: targets
+        triggeredActivityRollAs: self
+        forceDialog: false
+        confirmTargets: default
+        automationOnly: false
+        otherActivityCompatible: false
+        autoTargetType: any
+        autoTargetAction: default
+        magicEffect: true
+        magicDamage: true
+        forceConsumeDialog: default
+        forceRollDialog: default
+        forceDamageDialog: default
+        noConcentrationCheck: false
+        skipConcentrationCheck: false
+        removeChatButtons: default
+        rollMode: default
+        chooseEffects: false
+        toggleEffect: false
+        ignoreFullCover: false
+  uses:
+    spent: null
+    max: ''
+    recovery: []
+effects:
+  - _id: proneBloodburn00
+    name: Prone (Bloodburn)
+    img: icons/svg/falling.svg
+    type: base
+    description: <p>You fall prone, wracked with pain as your blood boils.</p>
+    statuses:
+      - prone
+    origin: null
+    sort: 0
+    disabled: false
+    transfer: false
+    duration:
+      value: null
+      units: ''
+      expiry: null
+      expired: false
+    start:
+      time: 0
+      round: 0
+      turn: 0
+      combat: null
+      combatant: null
+      initiative: null
+    showIcon: 2
+    system:
+      changes: []
+    flags:
+      dae:
+        stackable: noneName
+      tyler-premade-kit:
+        info:
+          identifier: tpk-bloodburn-prone
+          source: tylers-premade-kit
+          version: 0.1.0
+          rules: modern
+    _key: '!items.effects!tpkBloodburn0001.proneBloodburn00'
+flags:
+  midi-qol:
+    effectActivation: false
+    onUseMacroName: '[preItemRoll]ItemMacro,[damageBonus]ItemMacro,[postActiveEffects]ItemMacro'
+    AoETargetType: any
+    AoETargetTypeIncludeSelf: false
+    autoTarget: default
+    rollAttackPerTarget: never
+    removeAttackDamageButtons: default
+    itemCondition: ''
+    reactionCondition: ''
+    otherCondition: ''
+    effectCondition: ''
+  midiProperties:
+    nodam: false
+    fulldam: false
+    halfdam: false
+    autoFailFriendly: false
+    autoSaveFriendly: false
+    rollOther: false
+    critOther: false
+    offHandWeapon: false
+    magicdam: true
+    magiceffect: true
+    concentration: false
+    noConcentrationCheck: false
+    toggleEffect: false
+    ignoreTotalCover: false
+    confirmTargets: default
+    idr: false
+    idi: false
+    idv: false
+    ida: false
+  dae:
+    macro:
+      name: Bloodburn
+      img: icons/magic/fire/explosion-fireball-medium-red-orange.webp
+      type: script
+      scope: global
+      command: |
+        const params = {speaker, actor, token, character, item, args, scope};
+        if (typeof args[0] !== "string") {
+          params.workflow = workflow;
+          params.options = options;
+        }
+        return await TPK.macros.spells.bloodburn(params);
+      author: null
+      ownership:
+        default: 3
+      flags: {}
+  tyler-premade-kit:
+    info:
+      identifier: tpk-bloodburn
+      source: tylers-premade-kit
+      version: 0.1.0
+      rules: modern
+_id: tpkBloodburn0001
+_key: '!items!tpkBloodburn0001'

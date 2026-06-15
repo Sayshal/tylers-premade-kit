@@ -4,12 +4,17 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build:packs": "node ./todo/factory/scripts/build-packs.mjs pack",
-    "build:unpack": "node ./todo/factory/scripts/build-packs.mjs unpack",
-    "build:clean": "node ./todo/factory/scripts/build-packs.mjs clean"
+    "build:clean": "node ./utils/packs.mjs package clean",
+    "build:db": "node ./utils/packs.mjs package pack",
+    "build:json": "node ./utils/packs.mjs package unpack",
+    "build:source": "node ./utils/packs.mjs package unpack",
+    "compile": "npm run build:db",
+    "extract": "npm run build:source"
   },
   "devDependencies": {
     "@foundryvtt/foundryvtt-cli": "^1.0.0-rc.4",
-    "js-yaml": "^4.1.0"
+    "fancy-log": "^2.0.0",
+    "js-yaml": "^4.1.0",
+    "yargs": "^17.7.2"
   }
 }
