@@ -6,12 +6,8 @@
   "compatibility": {
     "verified": "14.366"
   },
-  "esmodules": [
-    "scripts/module.mjs"
-  ],
-  "styles": [
-    "styles/module.css"
-  ],
+  "esmodules": ["scripts/module.mjs"],
+  "styles": ["styles/module.css"],
   "languages": [
     {
       "lang": "en",
@@ -121,12 +117,7 @@
       "name": "Tyler's Premade Kit",
       "sorting": "m",
       "color": "#ff144f",
-      "packs": [
-        "tpk-actors",
-        "tpk-items",
-        "tpk-spells",
-        "tpk-features"
-      ],
+      "packs": ["tpk-actors", "tpk-items", "tpk-spells", "tpk-features"],
       "folders": []
     }
   ]

@@ -20,17 +20,14 @@ const PACK_DEST = 'packs';
 const PACK_SRC = 'packs/_source';
 
 // eslint-disable-next-line
-const argv = yargs(hideBin(process.argv))
-  .command(packageCommand())
-  .help().alias('help', 'h')
-  .argv;
+const argv = yargs(hideBin(process.argv)).command(packageCommand()).help().alias('help', 'h').argv;
 
 /** Yargs command spec. */
 function packageCommand() {
   return {
     command: 'package [action] [pack] [entry]',
     describe: 'Manage packages',
-    builder: yargs => {
+    builder: (yargs) => {
       yargs.positional('action', {
         describe: 'The action to perform.',
         type: 'string',
@@ -45,12 +42,15 @@ function packageCommand() {
         type: 'string'
       });
     },
-    handler: async argv => {
+    handler: async (argv) => {
       const { action, pack, entry } = argv;
       switch (action) {
-        case 'clean': return cleanPacks(pack, entry);
-        case 'pack': return compilePacks(pack);
-        case 'unpack': return extractPacks(pack, entry);
+        case 'clean':
+          return cleanPacks(pack, entry);
+        case 'pack':
+          return compilePacks(pack);
+        case 'unpack':
+          return extractPacks(pack, entry);
       }
     }
   };
@@ -99,9 +99,9 @@ function cleanPackEntry(data, { clearSourceId = true, ownership = 0 } = {}) {
     if (data.prototypeToken?.texture) data.prototypeToken.texture.src = '';
   }
 
-  if (data.effects) data.effects.forEach(i => cleanPackEntry(i, { clearSourceId: false }));
-  if (data.items) data.items.forEach(i => cleanPackEntry(i, { clearSourceId: false }));
-  if (data.pages) data.pages.forEach(i => cleanPackEntry(i, { ownership: -1 }));
+  if (data.effects) data.effects.forEach((i) => cleanPackEntry(i, { clearSourceId: false }));
+  if (data.items) data.items.forEach((i) => cleanPackEntry(i, { clearSourceId: false }));
+  if (data.pages) data.pages.forEach((i) => cleanPackEntry(i, { ownership: -1 }));
   if (data.system?.description?.value) data.system.description.value = cleanString(data.system.description.value);
   if (data.label) data.label = cleanString(data.label);
   if (data.name) data.name = cleanString(data.name);
@@ -122,9 +122,7 @@ function cleanString(str) {
  */
 async function cleanPacks(packName, entryName) {
   entryName = entryName?.toLowerCase();
-  const folders = fs.readdirSync(PACK_SRC, { withFileTypes: true }).filter(file =>
-    file.isDirectory() && (!packName || (packName === file.name))
-  );
+  const folders = fs.readdirSync(PACK_SRC, { withFileTypes: true }).filter((file) => file.isDirectory() && (!packName || packName === file.name));
 
   async function* _walkDir(directoryPath) {
     const directory = await readdir(directoryPath, { withFileTypes: true });
@@ -139,7 +137,7 @@ async function cleanPacks(packName, entryName) {
     logger.info(`Cleaning pack ${folder.name}`);
     for await (const src of _walkDir(path.join(PACK_SRC, folder.name))) {
       const data = YAML.load(await readFile(src, { encoding: 'utf8' }));
-      if (entryName && (entryName !== data.name.toLowerCase())) continue;
+      if (entryName && entryName !== data.name.toLowerCase()) continue;
       if (!data._id || !data._key) {
         console.log(`Failed to clean \x1b[31m${src}\x1b[0m, must have _id and _key.`);
         continue;
@@ -160,15 +158,13 @@ async function cleanPacks(packName, entryName) {
  * @param {string} [packName]
  */
 async function compilePacks(packName) {
-  const folders = fs.readdirSync(PACK_SRC, { withFileTypes: true }).filter(file =>
-    file.isDirectory() && (!packName || (packName === file.name))
-  );
+  const folders = fs.readdirSync(PACK_SRC, { withFileTypes: true }).filter((file) => file.isDirectory() && (!packName || packName === file.name));
 
   for (const folder of folders) {
     const src = path.join(PACK_SRC, folder.name);
     const dest = path.join(PACK_DEST, folder.name);
     // Skip empty source dirs — abstract-level iterator races on close when there's nothing to write.
-    const hasYaml = fs.readdirSync(src).some(f => f.endsWith('.yml') || f.endsWith('.yaml'));
+    const hasYaml = fs.readdirSync(src).some((f) => f.endsWith('.yml') || f.endsWith('.yaml'));
     if (!hasYaml) {
       logger.info(`Skipping empty pack ${folder.name}`);
       continue;
@@ -184,7 +180,7 @@ async function compilePacks(packName) {
     }
   }
   // Give LevelDB a tick to flush any pending close handlers before Node exits.
-  await new Promise(resolve => setImmediate(resolve));
+  await new Promise((resolve) => setImmediate(resolve));
 }
 
 /* ----------------------------------------- */
@@ -199,7 +195,7 @@ async function compilePacks(packName) {
 async function extractPacks(packName, entryName) {
   entryName = entryName?.toLowerCase();
   const moduleJson = JSON.parse(fs.readFileSync('./module.json', { encoding: 'utf8' }));
-  const packs = moduleJson.packs.filter(p => !packName || p.name === packName);
+  const packs = moduleJson.packs.filter((p) => !packName || p.name === packName);
 
   for (const packInfo of packs) {
     const dest = path.join(PACK_SRC, packInfo.name);
@@ -209,11 +205,14 @@ async function extractPacks(packName, entryName) {
     const containers = {};
     await extractPack(packInfo.path, dest, {
       log: false,
-      transformEntry: e => {
+      transformEntry: (e) => {
         if (e._key.startsWith('!folders')) folders[e._id] = { name: slugify(e.name), folder: e.folder };
-        else if (e.type === 'container') containers[e._id] = {
-          name: slugify(e.name), container: e.system?.container, folder: e.folder
-        };
+        else if (e.type === 'container')
+          containers[e._id] = {
+            name: slugify(e.name),
+            container: e.system?.container,
+            folder: e.folder
+          };
         return false;
       }
     });
@@ -225,8 +224,8 @@ async function extractPacks(packName, entryName) {
         parent = collection[parent[parentKey]];
       }
     };
-    Object.values(folders).forEach(f => buildPath(folders, f, 'folder'));
-    Object.values(containers).forEach(c => {
+    Object.values(folders).forEach((f) => buildPath(folders, f, 'folder'));
+    Object.values(containers).forEach((c) => {
       buildPath(containers, c, 'container');
       const folder = folders[c.folder];
       if (folder) c.path = path.join(folder.path, c.path);
@@ -234,11 +233,11 @@ async function extractPacks(packName, entryName) {
 
     await extractPack(packInfo.path, dest, {
       log: true,
-      transformEntry: entry => {
-        if (entryName && (entryName !== entry.name.toLowerCase())) return false;
+      transformEntry: (entry) => {
+        if (entryName && entryName !== entry.name.toLowerCase()) return false;
         cleanPackEntry(entry);
       },
-      transformName: entry => {
+      transformName: (entry) => {
         if (entry._id in folders) return path.join(folders[entry._id].path, '_folder.yml');
         if (entry._id in containers) return path.join(containers[entry._id].path, '_container.yml');
         const outputName = slugify(entry.name);
@@ -255,5 +254,10 @@ async function extractPacks(packName, entryName) {
  * @param name
  */
 function slugify(name) {
-  return name.toLowerCase().replace("'", '').replace(/[^\da-z]+/gi, ' ').trim().replace(/\s+|-{2,}/g, '-');
+  return name
+    .toLowerCase()
+    .replace("'", '')
+    .replace(/[^\da-z]+/gi, ' ')
+    .trim()
+    .replace(/\s+|-{2,}/g, '-');
 }

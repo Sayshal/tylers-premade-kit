@@ -109,24 +109,11 @@ export async function bloodburn({ actor, args, workflow } = {}) {
       return;
     }
     const patreon = game.modules.get('jb2a_patreon')?.active;
-    const rayFile = patreon
-      ? 'jb2a.energy_strands.range.standard.crimsonred'
-      : 'jb2a.scorching_ray.01.orange';
-    const impactFile = patreon
-      ? 'jb2a.impact.blood.01'
-      : 'jb2a.impact.013.orangeyellow';
+    const rayFile = patreon ? 'jb2a.energy_strands.range.standard.crimsonred' : 'jb2a.scorching_ray.01.orange';
+    const impactFile = patreon ? 'jb2a.impact.blood.01' : 'jb2a.impact.013.orangeyellow';
     const seq = new Sequence({ moduleName: 'tylers-premade-kit', softFail: true });
     for (const target of workflow.targets) {
-      seq
-        .effect()
-        .file(rayFile)
-        .atLocation(workflow.token)
-        .stretchTo(target)
-        .waitUntilFinished(-500)
-        .effect()
-        .file(impactFile)
-        .atLocation(target)
-        .scale(0.8);
+      seq.effect().file(rayFile).atLocation(workflow.token).stretchTo(target).waitUntilFinished(-500).effect().file(impactFile).atLocation(target).scale(0.8);
     }
     await seq.play();
     return;
