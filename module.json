@@ -4,15 +4,16 @@
   "description": "A growing compendium of D&D 5e spells, items, features, and statblocks built on midi-qol, DAE, and Sequencer, so each one handles its own rolls, conditions, and animations the moment you drop it on a sheet.",
   "version": "0.0.1",
   "compatibility": {
+    "minimum": "14",
     "verified": "14.367"
   },
-  "esmodules": ["scripts/module.mjs"],
-  "styles": ["styles/module.css"],
+  "esmodules": ["tylers-premade-kit.mjs"],
+  "styles": ["styles/tylers-premade-kit.css"],
   "languages": [
     {
       "lang": "en",
       "name": "English",
-      "path": "languages/en.json"
+      "path": "lang/en.json"
     }
   ],
   "relationships": {

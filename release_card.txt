@@ -1,0 +1,9 @@
+## Breaking Changes
+
+- The TPK Items pack ships empty; the Gunslinger Items from 0.0.1, including the Imbued Bullet consumables, are not in this build.
+
+## New Features
+
+- A TPK Spells pack holding Bloodburn and Numbing Touch, each automated through midi-qol and DAE.
+- Bloodburn asks how many hit points to spend, costs the caster that HP and adds one bonus fire damage per point spent.
+- Numbing Touch, a necromancy cantrip, deals cold damage on a failed Wisdom save and plays a Sequencer animation when JB2A is active.

@@ -1,3 +1,9 @@
+/**
+ * Numbing Touch — play an energy-strand animation from the caster to each target on the postActiveEffects pass.
+ * @param {object} root0           Midi-QOL macro call context.
+ * @param {Array} root0.args       Midi-QOL macro arguments.
+ * @param {object} root0.workflow  Midi-QOL workflow.
+ */
 export async function numbingTouch({ args, workflow }) {
   if (args?.[0]?.tag !== 'OnUse') return;
   if (args[0].macroPass !== 'postActiveEffects') return;

@@ -5,3 +5,4 @@ todo/
 node_modules/
 packs/*
 !packs/_source/
+dist/

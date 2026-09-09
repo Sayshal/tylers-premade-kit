@@ -22,7 +22,10 @@ const PACK_SRC = 'packs/_source';
 // eslint-disable-next-line
 const argv = yargs(hideBin(process.argv)).command(packageCommand()).help().alias('help', 'h').argv;
 
-/** Yargs command spec. */
+/**
+ * Yargs command spec.
+ * @returns {object} Yargs command definition.
+ */
 function packageCommand() {
   return {
     command: 'package [action] [pack] [entry]',
@@ -63,7 +66,7 @@ function packageCommand() {
 /**
  * Strip unwanted flags, permissions, defaults from an entry before extract/compile.
  * @param {object} data                           Single entry to clean.
- * @param {object} [options]
+ * @param {object} [options]               Cleaning options.
  * @param {boolean} [options.clearSourceId]  Delete core sourceId.
  * @param {number} [options.ownership]          Reset default ownership.
  */
@@ -109,7 +112,8 @@ function cleanPackEntry(data, { clearSourceId = true, ownership = 0 } = {}) {
 
 /**
  * Strip invisible whitespace, normalize quotes.
- * @param str
+ * @param {string} str  String to clean.
+ * @returns {string} Cleaned string.
  */
 function cleanString(str) {
   return str.replace(/⁠/gu, '').replace(/[‘’]/gu, "'").replace(/[“”]/gu, '"');
@@ -117,13 +121,18 @@ function cleanString(str) {
 
 /**
  * Clean source YAML files in-place.
- * @param {string} [packName]
- * @param {string} [entryName]
+ * @param {string} [packName]   Limit to a single pack.
+ * @param {string} [entryName]  Limit to a single entry.
  */
 async function cleanPacks(packName, entryName) {
   entryName = entryName?.toLowerCase();
   const folders = fs.readdirSync(PACK_SRC, { withFileTypes: true }).filter((file) => file.isDirectory() && (!packName || packName === file.name));
 
+  /**
+   * Recursively yield YAML file paths under a directory.
+   * @param {string} directoryPath  Directory to walk.
+   * @yields {string} Path to a YAML file.
+   */
   async function* _walkDir(directoryPath) {
     const directory = await readdir(directoryPath, { withFileTypes: true });
     for (const entry of directory) {
@@ -155,7 +164,7 @@ async function cleanPacks(packName, entryName) {
 
 /**
  * Compile source files into LevelDB packs.
- * @param {string} [packName]
+ * @param {string} [packName]   Limit to a single pack.
  */
 async function compilePacks(packName) {
   const folders = fs.readdirSync(PACK_SRC, { withFileTypes: true }).filter((file) => file.isDirectory() && (!packName || packName === file.name));
@@ -189,8 +198,8 @@ async function compilePacks(packName) {
 
 /**
  * Extract LevelDB packs into source YAML.
- * @param {string} [packName]
- * @param {string} [entryName]
+ * @param {string} [packName]   Limit to a single pack.
+ * @param {string} [entryName]  Limit to a single entry.
  */
 async function extractPacks(packName, entryName) {
   entryName = entryName?.toLowerCase();
@@ -251,7 +260,8 @@ async function extractPacks(packName, entryName) {
 
 /**
  * Standardize a name to a filename slug.
- * @param name
+ * @param {string} name  Name to convert.
+ * @returns {string} Filename slug.
  */
 function slugify(name) {
   return name

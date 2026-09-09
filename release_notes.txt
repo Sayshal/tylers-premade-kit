@@ -1,0 +1,9 @@
+## Breaking Changes
+
+- The TPK Items pack ships empty. The Gunslinger Items from 0.0.1 (the Imbued Bullet consumables, Pistol, Ammo Pouch and Sanguine Pistol Bullet) have no source files under packs/_source yet, so they are not in this build.
+
+## New Features
+
+- A TPK Spells compendium pack under a Tyler's Premade Kit folder, currently holding two spells, Bloodburn and Numbing Touch, each carrying its own midi-qol and DAE automation.
+- Bloodburn, a 1st-level evocation save spell. A dialog asks how many hit points to spend, the caster takes that damage, and every point spent adds one point of bonus fire damage. Constructs, elementals and undead are filtered out as immune.
+- Numbing Touch, a necromancy cantrip that deals cold damage on a failed Wisdom save and plays a Sequencer animation when JB2A is active.

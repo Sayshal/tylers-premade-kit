@@ -5,6 +5,11 @@
  *  - OnUse / preItemRoll: filter immune creature types, prompt for HP cost, apply self-damage.
  *  - DamageBonus / damageBonus: add HP-spent as bonus fire damage.
  *  - OnUse / postActiveEffects: play crimson ray + blood impact animation.
+ * @param {object} [root0]           Midi-QOL macro call context.
+ * @param {object} [root0.actor]     Casting actor.
+ * @param {Array} [root0.args]       Midi-QOL macro arguments.
+ * @param {object} [root0.workflow]  Midi-QOL workflow.
+ * @returns {Promise<boolean|object[]|undefined>} False to abort the roll, damage-bonus entries on the DamageBonus pass, otherwise undefined.
  */
 export async function bloodburn({ actor, args, workflow } = {}) {
   // DEBUG entry — confirm macro fires at all and inspect args shape.
